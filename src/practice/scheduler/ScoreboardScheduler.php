@@ -5,6 +5,7 @@ namespace practice\scheduler;
 use pocketmine\scheduler\Task;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
+use practice\arena\ArenaRegistry;
 use practice\libs\scoreboard\Scoreboard;
 
 class ScoreboardScheduler extends Task {
@@ -16,7 +17,7 @@ class ScoreboardScheduler extends Task {
             $scoreboard->addLine($players, 1, "");
             $scoreboard->addLine($players, 2, TextFormat::colorize(" &eOnline: &f" . count(Server::getInstance()->getOnlinePlayers())));
             $scoreboard->addLine($players, 3, TextFormat::colorize("&r"));
-            $scoreboard->addLine($players, 4, TextFormat::colorize(" &eIn Fights: &f" . "0"));
+            $scoreboard->addLine($players, 4, TextFormat::colorize(" &eIn Fights: &f" . ArenaRegistry::getInstance()->getPlayersInFightCount()));
             $scoreboard->addLine($players, 5, TextFormat::colorize(" &eIn Queues: &f" . "0"));
             $scoreboard->addLine($players, 6, TextFormat::colorize("&r&r"));
             $scoreboard->addLine($players, 7, TextFormat::colorize(" &7myserver.com"));

@@ -8,11 +8,22 @@ use pocketmine\player\Player;
 use pocketmine\Server;
 use pocketmine\utils\SingletonTrait;
 use pocketmine\utils\TextFormat;
+use practice\session\Session;
 
 class PlayerUtils {
     use SingletonTrait {
         setInstance as private;
         reset as private;
+    }
+
+    public function sendDuelFoundMessage(Session $session1, Session $session2): void {
+        $player = $session1->getPlayer();
+        $player->sendMessage("");
+        $player->sendMessage(TextFormat::colorize(" &l&eDuel Found"));
+        $player->sendMessage(TextFormat::colorize(" &l&e| &r&7Opponent: &e" . $session2->getName()));
+        $player->sendMessage(TextFormat::colorize(" &l&e| &r&7Ping: &e" . $player->getNetworkSession()->getPing()));
+        $player->sendMessage(TextFormat::colorize(" &l&e| &r&7Your Elo: &e" . $session1->getHelio()));
+        $player->sendMessage("");
     }
 
     public function sendLobbyItems(Player $player): void {

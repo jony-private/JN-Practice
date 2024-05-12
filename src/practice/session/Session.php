@@ -3,6 +3,8 @@
 namespace practice\session;
 
 use JsonException;
+use pocketmine\player\Player;
+use pocketmine\Server;
 use practice\database\DataCreator;
 
 class Session {
@@ -23,6 +25,10 @@ class Session {
 
     public function getName(): string {
         return $this->name;
+    }
+
+    public function getPlayer(): ?Player {
+        return Server::getInstance()->getPlayerExact($this->getName()) ?? null;
     }
 
     public function setWins(int $wins): void {

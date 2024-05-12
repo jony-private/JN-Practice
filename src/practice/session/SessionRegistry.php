@@ -26,7 +26,7 @@ class SessionRegistry {
     public function create(string $name): void {
         $session = new Session($name);
         $session->setWins(0);
-        $session->setHelio(0);
+        $session->setHelio(1000);
         $session->setLoses(0);
         $session->setKDR(0);
         $data = new DataCreator("sessions/" . $name . ".json");

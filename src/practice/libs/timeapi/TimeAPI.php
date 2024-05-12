@@ -11,7 +11,7 @@ class TimeAPI {
     }
 
     public function getTimeToFullString(int $time): string {
-        return gmdate("H:i:s", $time);
+        return gmdate("i:s", $time);
     }
 
     public function getTimeFormat(int $time): string {
