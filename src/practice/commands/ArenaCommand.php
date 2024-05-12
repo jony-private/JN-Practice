@@ -129,9 +129,6 @@ class ArenaCommand extends Command {
                         $sender->sendMessage(TextFormat::colorize("&eArena ID: &7" . $arenas->getName() . "&e, Mode: &7" . $arenas->getMode()->getName() . "&e, Enabled: &7" . ($arenas->isEnabled() ? "Yes" : "No")));
                     }
                     break;
-                case "test":
-                    ArenaRegistry::getInstance()->findArena(Game::RANKED, [$sender->getName(), $sender->getName()]);
-                    break;
                 default:
                     $sender->sendMessage(TextFormat::colorize("&cUse: /arena help for more commands."));
                     return;

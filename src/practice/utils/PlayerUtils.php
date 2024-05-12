@@ -37,7 +37,7 @@ class PlayerUtils {
         $inventory->setItem(0, VanillaItems::DIAMOND_SWORD()->setCustomName(TextFormat::colorize("&l&eRanked Duels")));
         $inventory->setItem(1, VanillaItems::IRON_SWORD()->setCustomName(TextFormat::colorize("&l&eUnranked Duels")));
         $inventory->setItem(2, VanillaItems::GOLDEN_AXE()->setCustomName(TextFormat::colorize("&l&eFFA Duels")));
-        $inventory->setItem(7, VanillaItems::NETHER_STAR()->setCustomName(TextFormat::colorize("&l&eParties")));
+        $inventory->setItem(7, VanillaItems::NETHER_STAR()->setCustomName(TextFormat::colorize("&l&eStats")));
         $inventory->setItem(8, VanillaBlocks::REDSTONE_REPEATER()->asItem()->setCustomName(TextFormat::colorize("&l&eSettings")));
     }
 
@@ -47,7 +47,6 @@ class PlayerUtils {
         $player->sendMessage(TextFormat::colorize("&7Some of these features of this season:"));
         $player->sendMessage(TextFormat::colorize("&l&e| &r&7Ranked and Unranked Duels."));
         $player->sendMessage(TextFormat::colorize("&l&e| &r&7FFA Duels."));
-        $player->sendMessage(TextFormat::colorize("&l&e| &r&7Parties system."));
         $player->sendMessage(" ");
         $player->sendMessage(TextFormat::colorize("&7Join our discord &9discord.myserver.com &7for more news."));
     }

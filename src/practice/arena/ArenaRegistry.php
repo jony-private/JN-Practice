@@ -9,10 +9,12 @@ use pocketmine\utils\SingletonTrait;
 use pocketmine\world\Position;
 use practice\arena\game\Game;
 use practice\arena\game\GameRegistry;
+use practice\arena\mode\Mode;
 use practice\arena\mode\ModeModule;
 use practice\arena\scheduler\StartedGameScheduler;
 use practice\database\DataCreator;
 use practice\Practice;
+use practice\queue\QueueModule;
 
 class ArenaRegistry {
     use SingletonTrait {
@@ -23,6 +25,7 @@ class ArenaRegistry {
     private array $arenas = [];
 
     public function emmit(): void {
+        QueueModule::getInstance()->createQueueCache();
         ModeModule::getInstance()->emmit();
         if (!is_dir(Practice::getInstance()->getDataFolder() . "arenas")) @mkdir(Practice::getInstance()->getDataFolder() . "arenas");
         foreach (glob(Practice::getInstance()->getDataFolder() . "arenas/" . "*.json") as $file) {
@@ -85,8 +88,10 @@ class ArenaRegistry {
         if ($this->hasMaps()) {
             foreach ($this->getArenas() as $arena) {
                 if ($arena->isEnabled()) {
-                    foreach ($arena->getPlayers() as $player) {
-                        $players++;
+                    if ($arena->isActive()) {
+                        foreach ($arena->getPlayers() as $player) {
+                            $players++;
+                        }
                     }
                 }
             }
@@ -94,8 +99,8 @@ class ArenaRegistry {
         return $players;
     }
 
-    public function findArena(int $matchType, array $players): void {
-        $arena = $this->getRandomArena();
+    public function findArena(int $matchType, Mode $mode, array $players): void {
+        $arena = $this->getRandomArena($mode);
         $arena->setPlayers($players);
         $game = new Game($arena);
         $game->setType($matchType);
@@ -105,13 +110,15 @@ class ArenaRegistry {
         $arena->teleport();
     }
 
-    public function getRandomArena(): ?Arena {
+    public function getRandomArena(Mode $mode): ?Arena {
         $arenas = [];
         if ($this->hasEnabledArenas()) {
             foreach ($this->getArenas() as $arena) {
                 if ($arena->isEnabled()) {
-                    if ($arena->getStatus() === Arena::WAITING) {
-                        $arenas[$arena->getName()] = $arena;
+                    if ($arena->getMode()->getName() === $mode->getName()) {
+                        if ($arena->getStatus() === Arena::WAITING) {
+                            $arenas[$arena->getName()] = $arena;
+                        }
                     }
                 }
             }
