@@ -12,6 +12,7 @@ use practice\arena\Arena;
 use practice\arena\ArenaRegistry;
 use practice\arena\game\Game;
 use practice\arena\mode\ModeModule;
+use practice\arena\mode\types\NoDebuffMode;
 use practice\utils\PermissionRegistry;
 
 class ArenaCommand extends Command {
@@ -128,6 +129,9 @@ class ArenaCommand extends Command {
                     foreach (ArenaRegistry::getInstance()->getArenas() as $arenas) {
                         $sender->sendMessage(TextFormat::colorize("&eArena ID: &7" . $arenas->getName() . "&e, Mode: &7" . $arenas->getMode()->getName() . "&e, Enabled: &7" . ($arenas->isEnabled() ? "Yes" : "No")));
                     }
+                    break;
+                case "test":
+                    ArenaRegistry::getInstance()->findArena(Game::RANKED, new NoDebuffMode(), [$sender->getName(), $sender->getName()]);
                     break;
                 default:
                     $sender->sendMessage(TextFormat::colorize("&cUse: /arena help for more commands."));
